@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 
 import { HttpClient } from '@angular/common/http';
+import { ToastController } from '@ionic/angular';
 import { Observable } from 'rxjs';
 
 @Component({
@@ -12,8 +13,10 @@ import { Observable } from 'rxjs';
 export class Tab1Page {
 
   public GETSiswa: any;
+  public deleteSiswa: any;
   constructor(
-    private http: HttpClient
+    private http: HttpClient,
+    private toast: ToastController
   ) { }
 
 
@@ -24,7 +27,7 @@ export class Tab1Page {
   
   _Getdata() {
     let data: Observable<any>;
-    data = this.http.get('http://localhost/codeigniter/apiserver/index.php/api/getdata');
+    data = this.http.get('http://localhost/ci_crud/index.php/api/GetData/');
     data.subscribe(result => {
       this.GETSiswa = result;
       console.log(result);
@@ -32,6 +35,20 @@ export class Tab1Page {
   }
 
 
+  public deleteData(npm) {
+    let data: Observable<any>;
+    data = this.http.get(
+      'http://localhost/ci_crud/index.php/api/deletedata/' + npm
+    );
+    data.subscribe((result) => {
+      this.deleteSiswa = result;
+      console.log(result.status);
+      if (result.status === 'berhasil') {
+        alert('Delete Data Successfully!');
+        this.ionViewWillEnter();
+      }
+    });
+  }
 
 
 }

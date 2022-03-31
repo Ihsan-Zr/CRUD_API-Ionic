@@ -14,9 +14,12 @@ import { Observable } from 'rxjs';
 
 export class Tab2Page {
 
-  nis: string;
+  npm: string;
   nama: string;
+  jurusan: string;
+  prodi: string;
   kelas: string;
+
   public POSTData: any;
   constructor(
     private http: HttpClient,
@@ -25,32 +28,30 @@ export class Tab2Page {
 
   submit() {
 
-    if(this.nis!=null && this.nama!=null && this.kelas!=null){
+    if(this.npm!=null && this.nama!=null && this.jurusan!=null && this.prodi!=null && this.kelas!=null){
         this._Postdata();
-        console.log(this.nis, this.nama, this.kelas);
-        this.nis="";
+        console.log(this.npm, this.nama, this.jurusan, this.prodi, this.kelas);
+        this.npm="";
         this.nama="";
+        this.jurusan = "";
+        this.prodi = "";
         this.kelas="";
         alert("Create Data Successfully");
     }else{
         alert("Data harus lengkap !");
     }
-    
-      
-    
+
   }
 
   _Postdata() {
     let data: Observable<any>;
-    data = this.http.get('http://localhost/codeigniter/apiserver/index.php/api/postdata/' + this.nis + '/' + this.nama + '/' + this.kelas);
+    data = this.http.get('http://localhost/ci_crud/index.php/Api/PostData/' + this.npm + '/' + this.nama + '/' + this.jurusan + '/' + this.prodi + '/' + this.kelas + '/' );
     data.subscribe(result => {
       this.POSTData = result;
       console.log(result);
-      if (result.status === 'Ok') {
+      if (result.status === 'Berhasil') {
         alert("Create Data Successfully");
       }
     });
   }
 }
-
-
